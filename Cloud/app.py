@@ -26,7 +26,7 @@ scheduler = BackgroundScheduler()
 scheduler.start()
 
 mysql = MySQL(app)
-app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_HOST'] = '44.203.177.125'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'website'
