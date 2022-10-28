@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock%}
+
+{% block body %}
+
+
+    <div class="center">
+     
+        <h1>insert image</h1>
+        <form action="./keys.html" method="post">
+          <h3>Key:</h3>
+          <div class="inputbox">
+            <input type="text" name="name" required="required">
+            <span>key</span>
+          </div>
+          <h3>img:</h3>
+          <div class="inputbox">
+              <label for="myfile" class="filelable">Upload</label>
+              <input type="file" id="myfile" name ="img" placeholder="Select your img" accept="image/*" required>
+              
+          </div>
+          <div class="inputbox">
+            <input type="submit" value="submit">
+          </div>
+        </form>
+      </div>
+
+
+{% endblock%}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    h1 {
+        text-align: center;
+
+    }
+
+    .center {
+        margin: 0;
+
+    }
+
+    table,
+    td,
+    th {
+        border: 3px solid #aaa;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        height: 30px;
+    }
+
+    td {
+        text-align: center;
+        padding: 5px;
+    }
+
+    .form {
+        margin-top: 20px;
+    }
+
+    #center {
+        width: 70%;
+    }
+</style>
+{% endblock%}
+
+{% block body %}
+<div class="center">
+    <h1>All keys</h1>
+    <table>
+        <tr>
+            <th>Key</th>
+
+        </tr>
+        
+        {%for x in keys:%}
+        <tr>
+            <th>{{ ''.join(x) }}</th>
+
+        </tr>
+        {%endfor%}
+
+    </table>
+</div>
+{% endblock%}

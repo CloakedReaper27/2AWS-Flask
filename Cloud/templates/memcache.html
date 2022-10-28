@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock%}
+
+{% block body %}
+<div class="center">
+    <h1 class="mem">Mem-Cache Statistics:-</h1>
+    <div class="mem-box">
+
+        <div>
+            <p>Number of items     {{no}}</p>
+        </div>
+        <div>
+            <p>Total size of items:    {{size}}</p>
+        </div>
+        <div>
+            <p>Number of request:     {{request}}</p>
+        </div>
+        <div>
+            <p>Miss Rate:     {{misses}}</p>
+        </div>
+        <div>
+            <p>Hit Rate:     {{hits}}</p>
+        </div>
+    </div>
+</div>
+{% endblock%}

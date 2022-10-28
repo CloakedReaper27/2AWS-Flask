@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock%}
+
+{% block body %}
+
+
+    <div class="center">
+
+        {% with messages = get_flashed_messages()%}
+        {%if messages%}
+        {%for message in messages%}
+        
+        <div class="alert alert-primary" role="alert">
+        <strong>{{message}}  </strong>  
+        </div>
+        {%endfor%}
+    {%endif%}
+    {%endwith%}
+
+
+        <h1>insert image</h1>
+        <form action="/upload-image" method="POST" enctype="multipart/form-data">
+        <h3>Key:</h3>
+        <div class="inputbox">
+            <input type="text" name="name" required="required">
+            <span>key</span>
+        </div>
+        <h3>img:</h3>
+        <div class="inputbox">
+            <label for="myfile" class="filelable">Upload</label>
+            <input type="file" id="myfile" name ="image" placeholder="Select your img" accept="image/*" required> 
+        </div>
+        <div class="inputbox">
+            <input type="submit" value="submit">
+        </div>
+        </form>
+    </div>
+
+
+{% endblock%}

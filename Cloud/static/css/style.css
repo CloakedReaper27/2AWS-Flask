@@ -1,0 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
+
+ul{
+  list-style: none;
+  background-color: #EEE;
+  margin-bottom: 50px;
+  padding: 15px;
+}
+li{
+  padding: 25px;
+  margin-left: 20px;
+  display: inline;
+}
+a{
+  text-decoration: none;    
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(45deg, greenyellow, dodgerblue);
+  font-family: "Sansita Swashed", cursive;
+
+}
+img{
+    width: 200px;
+    height: 200px;
+}
+
+.img2{
+  width: 200px;
+  height: 200px;
+  top: -203px;
+  position: relative;
+}
+.center {
+  position: relative;
+  padding: 20px 130px;
+  background: #fff;
+  border-radius: 10px;
+  height: 500px;
+  max-width: 350px;
+}
+
+.center h1  {
+  font-size: 2em;
+  border-left: 5px solid dodgerblue;
+  padding: 10px;
+  color: #000;
+  letter-spacing: 5px;
+  margin-bottom: 25px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+.center nav{
+  display: flex;
+  border: 5px solid dodgerblue;
+  margin-left: 211px;
+  padding: 20px;
+  margin-right: -40px;
+}
+.center nav #Least{
+  margin-top: 45px;
+}
+.center #mem-cap{
+  border: 5px solid dodgerblue;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+.mem-box p{
+  margin: 40px;
+  width: 250px;
+  height: 30px;
+  padding-left: 5px;
+  padding-top: 5px;
+  border: 2px solid rgb(82, 144, 206);
+}
+.mem-box{
+  width: 350px;
+  border: 5px solid dodgerblue;
+  height: 400px;
+  padding-top: 0px;
+}
+.center .mem{
+
+  font-size: 20px;
+  letter-spacing: 2px;
+
+  font-weight: bold;
+  padding-left: 1px;
+}
+.center .inputbox {
+  position: relative;
+  width: 300px;
+  height: 50px;
+  margin-bottom: 25px;
+}
+.center .inputbox input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border: 2px solid #000;
+  outline: none;
+  background: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1.2em;
+}
+.center .inputbox:last-child {
+  margin-bottom: 20;
+}
+.center .inputbox span {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  font-size: 1em;
+  transition: 0.6s;
+  font-family: sans-serif;
+}
+.center .inputbox input:focus ~ span,
+.center .inputbox input:valid ~ span {
+  transform: translateX(-13px) translateY(-35px);
+  font-size: 1em;
+}
+.center .inputbox [type="submit"] ,.center .inputbox [type="reset"],.filelable{
+  width: 50%;
+  background: dodgerblue;
+  color: #fff;
+  border: #fff;
+}
+.center .inputbox:hover [type="submit"] ,.center .inputbox:hover [type="reset"]{
+  background: linear-gradient(45deg, greenyellow, dodgerblue);
+}
+
+input[type="file"]{
+  /* display: none; */
+}
+.filelable{
+
+  color: white;
+ display: none;
+  position: absolute;
+  background-color: #1e90ff;
+  margin: 93px 93px 93px 141px;
+  top: -97px;
+  cursor: pointer;
+  left: -75px;
+  text-align: center;
+  font-size: 25px;
+  border-radius: 10px;
+  padding: 16px;
+
+}
+.filelable:hover {
+  background: linear-gradient(45deg, greenyellow, dodgerblue);
+}

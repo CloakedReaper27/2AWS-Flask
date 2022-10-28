@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    p{
+        font-size: 25px;
+    }
+    #but{
+        top: -76px;
+       left: 170px;
+    }
+    span{
+        position: absolute;
+    bottom: 168px;
+    right: 155px;
+    }
+</style>
+{% endblock%}
+
+{% block body %}
+<div class="center">
+    <h1>Get image</h1>
+    <form  method="post">
+        <div class="inputbox">
+            <input type="text" required="required", name="key">
+            <span>key</span>
+            
+        </div>
+        <div>{{ Invaild }}</div>
+        <div class="inputbox">
+            
+            <input type="submit" value="Get">
+        </div>
+    </form>
+    <div id="image">
+        
+            <img src=" {{ url_for('display_image', filename=path) }} " alt="">
+            <img class = img2 src=" data:image/jpg/png;base64,{{ img_data }}" alt=""><br>
+        
+        <span>Key: {{ CurrentKey }}</span>
+        <!--<div class="inputbox">
+            <input type="button" value="Update">
+            
+        </div>
+        <div class="inputbox">
+            <input  id="but"  type="button" value="Delete">
+            
+        </div>-->
+
+        
+    </div>
+{% endblock%}
+</div>
