@@ -1,9 +1,7 @@
 from array import *
-from email.mime import base
 import random
 import sys
 import base64
-from tkinter import S
 from collections import OrderedDict
 
 memory_cache = {}
