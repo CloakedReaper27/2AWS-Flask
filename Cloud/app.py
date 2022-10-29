@@ -148,7 +148,7 @@ def memcache():
 
 app.config['IMAGE_UPLOADS'] = "static/images"
 
-path = NULL
+path = 0
 
 @app.route("/keys",methods=["GET"])
 def viewall():
