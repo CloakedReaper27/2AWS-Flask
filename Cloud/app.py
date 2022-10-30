@@ -28,7 +28,7 @@ scheduler.start()
 mysql = MySQL(app)
 app.config['MYSQL_HOST'] = '172.31.80.129'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = '123'
 app.config['MYSQL_DB'] = 'website'
 
 def interval_task():
