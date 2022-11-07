@@ -28,7 +28,7 @@ scheduler.start()
 mysql = MySQL(app)
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '123'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'website'
 
 def interval_task():
@@ -47,33 +47,38 @@ def delay_Mins():
         # Changes[2] = requests[0]
 
         cursor = mysql.connection.cursor()
-        cursor.execute(''' Select AVG(No_of_items) AS average from db_cache_statistic ''')
+        cursor.execute(''' Select AVG(No_of_items) ,AVG(TotalSize_of_items), AVG(No_of_requests), AVG(Miss_rate),AVG(Hit_rate) from db_cache_statistic ''')
         rows = cursor.fetchall()
-        for i in rows:
-            Changes[0] = i[0]
+
+        Changes[0] = rows[0][0]
+        Changes[1] = rows[0][1]
+        Changes[2] = rows[0][2]
+        Changes[3] = rows[0][3]
+        Changes[4] = rows[0][4]
+
+        mysql.connection.commit()
+        cursor.close()
+        # cursor.execute(''' Select AVG(TotalSize_of_items) AS average from db_cache_statistic ''')
+        # rows = cursor.fetchall()
+        # for i in rows:
+        #     Changes[1] = i[0]
 
         
-        cursor.execute(''' Select AVG(TotalSize_of_items) AS average from db_cache_statistic ''')
-        rows = cursor.fetchall()
-        for i in rows:
-            Changes[1] = i[0]
+        # cursor.execute(''' Select AVG(No_of_requests ) AS average from db_cache_statistic ''')
+        # rows = cursor.fetchall()
+        # for i in rows:
+        #     Changes[2] = i[0]
 
         
-        cursor.execute(''' Select AVG(No_of_requests ) AS average from db_cache_statistic ''')
-        rows = cursor.fetchall()
-        for i in rows:
-            Changes[2] = i[0]
+        # cursor.execute(''' Select AVG(Miss_rate) AS average from db_cache_statistic ''')
+        # rows = cursor.fetchall()
+        # for i in rows:
+        #     Changes[3] = i[0]
 
-        
-        cursor.execute(''' Select AVG(Miss_rate) AS average from db_cache_statistic ''')
-        rows = cursor.fetchall()
-        for i in rows:
-            Changes[3] = i[0]
-
-        cursor.execute(''' Select AVG(Hit_rate) AS average from db_cache_statistic ''')
-        rows = cursor.fetchall()
-        for i in rows:
-            Changes[4] = i[0]
+        # cursor.execute(''' Select AVG(Hit_rate) AS average from db_cache_statistic ''')
+        # rows = cursor.fetchall()
+        # for i in rows:
+        #     Changes[4] = i[0]
             
 @app.before_first_request
 def before_first_request():
@@ -88,6 +93,9 @@ def before_first_request():
     cursor.execute(''' Select Algorithm_Chosen from db_cache''')
     rows = cursor.fetchone()
     Algo_Default[0] = rows[0]
+
+    mysql.connection.commit()
+    cursor.close()
 
 
 #---------------------------------------
@@ -148,7 +156,7 @@ def memcache():
 
 app.config['IMAGE_UPLOADS'] = "static/images"
 
-path = 0
+path =  0
 
 @app.route("/keys",methods=["GET"])
 def viewall():
@@ -268,6 +276,6 @@ def server_error(e):
 
 
 if __name__ == "__main__":
-    app.run(host = '0.0.0.0', port = 5000, debug=True)
+    app.run(debug=True)
 
 
