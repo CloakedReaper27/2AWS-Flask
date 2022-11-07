@@ -31,18 +31,28 @@ def mem_cache(key,value):
         exit
 
     else:
+        i = 0
+        mem_list = list(memory_cache.keys())
+        LRU_list = list(LRUs.keys())
+
         print ('Cache full!, executing chosen algorithm')
         while (max_Default[0]-Total_Size() < sys.getsizeof(img_size)):
             if (Algo_Default[0] == 0):
 
-                l = sorted(memory_cache.items(), key=lambda x: random.random())
-                chosen = l.pop()
-                memory_cache.pop(chosen)
+                # l = sorted(memory_cache.items(), key=lambda x: random.random())
+                # chosen = l.pop()
+                val = random.choice(mem_list)
+                memory_cache.pop(val)
                 
             elif (Algo_Default[0] == 1):
+
+                key = LRU_list[i]
+                print (LRUs.popitem())
+                if key in memory_cache:
+                    memory_cache.pop(key)
+                i += 1
                 
-                item = LRUs.popitem()
-                memory_cache.pop(item)
+
         with open('static/images/'+value, "rb") as img_file:
                 
             memory_cache[key] = base64.b64encode(img_file.read()).decode("utf-8")
