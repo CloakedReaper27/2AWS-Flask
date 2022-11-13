@@ -17,7 +17,7 @@ miss = {0 :0}
 requests= {0 :0}
 #---------------------------------
 Changes = {0:0 ,1:0 ,2:0 ,3:0 ,4:0}
-
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 app.secret_key = 'dont tell anyone'
@@ -28,7 +28,7 @@ scheduler.start()
 mysql = MySQL(app)
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '123'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'website'
 
 def interval_task():
@@ -97,12 +97,13 @@ def before_first_request():
     mysql.connection.commit()
     cursor.close()
 
+    
 
 #---------------------------------------
 @app.route("/")
 def home():
 
-    return render_template('index.html')
+    return render_template('upload.html')
 @app.route("/editmem",methods=["GET", "POST"])
 def edit():
         if request.method == 'GET':
@@ -225,7 +226,9 @@ def display_image(filename):
 
 	return redirect(url_for('static', filename='images/' + filename))
 
-
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/upload-image",methods=["GET","POST"])
 
@@ -236,32 +239,42 @@ def upload_image():
     if request.method == "POST":
         if request.files:
             image = request.files["image"]
-            image.save(os.path.join(app.config['IMAGE_UPLOADS'],image.filename ))
+            if image and allowed_file(image.filename):
+                image.save(os.path.join(app.config['IMAGE_UPLOADS'],image.filename ))
             #print(os.path.join(app.config['IMAGE_UPLOADS'],image.filename))
+                
+                name = request.form['name']
 
-            name = request.form['name']
-
-            cursor = mysql.connection.cursor()
-            cursor.execute('''SELECT `image_path` FROM `images` WHERE `image_key` = %s''', (name,))
-            path = cursor.fetchone()
-            
-            try:
-                path = ''.join(path)  #Checks if key is already available
-
-            except TypeError:
                 cursor = mysql.connection.cursor()
-                cursor.execute(''' INSERT INTO images VALUES(%s,%s)''',(name,image.filename))
-                mysql.connection.commit()
-                cursor.close()
+                cursor.execute('''SELECT `image_path` FROM `images` WHERE `image_key` = %s''', (name,))
+                path = cursor.fetchone()
+                
+                try:
+                    path = ''.join(path)  #Checks if key is already available
 
-            cursor = mysql.connection.cursor()
-            cursor.execute(''' UPDATE images SET image_path = %s WHERE image_key = %s''',(image.filename,name))
-            mysql.connection.commit()
-            cursor.close()
-            if name in memory_cache:
-                mem_cache(name,image.filename)
-            return redirect(request.url)
-            
+                except TypeError:
+
+                    cursor = mysql.connection.cursor()
+                    cursor.execute(''' INSERT INTO images VALUES(%s,%s)''',(name,image.filename))
+                    mysql.connection.commit()
+                    cursor.close()
+                    flash("Image uploaded successfully.")
+                    check = 1
+
+                if (check != 1):
+
+                    cursor = mysql.connection.cursor()
+                    cursor.execute(''' UPDATE images SET image_path = %s WHERE image_key = %s''',(image.filename,name))
+                    mysql.connection.commit()
+                    cursor.close()
+                    flash("Image updated successfully.")
+                    check = 0
+                    if name in memory_cache:
+                        mem_cache(name,image.filename)
+                    return redirect(request.url)
+
+            else:
+                flash("Please enter a vaild image.")
     
 
     return render_template("upload.html")
@@ -276,6 +289,6 @@ def server_error(e):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host = "0.0.0.0", port = 5000)
+    app.run(debug=True)
 
 
