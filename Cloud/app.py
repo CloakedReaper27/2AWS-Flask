@@ -217,7 +217,11 @@ def search():
             return render_template("item.html",path=path, CurrentKey=key)
     elif zed == 0:
             return render_template("item.html",img_data=path, CurrentKey=key)
-    
+	
+@app.route("/Appmanager", methods=["GET"])
+def AppManager():
+    if request.method == 'GET':
+        return render_template('Appmanager.html')    
 
 @app.route('/display/<filename>')
 def display_image(filename):
