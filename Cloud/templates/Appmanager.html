@@ -1,0 +1,73 @@
+{% extends 'base.html' %} {% block head %} {% endblock%} {% block body %}
+<div class="container">
+  <h1>App Manager</h1>
+  <div class="setting">
+    <form method="post">
+      <div class="policy">
+        <h2>Policy</h2>
+        <input type="radio" name="mem" id="Random" value="Random" checked />
+        <label for="Random">Random Replacement</label>
+        <br />
+        <input type="radio" name="mem" id="Least" value="Least" />
+        <label for="Least">Least Recently Used</label>
+      </div>
+      <div class="memoryCapacity">
+        <h3>Memory Capacity</h3>
+        <label for="range"><span id="demo"></span>/4 MB -/+ </label><br />
+        <input type="range" name="range" id="range" min="1" max="4" value="" />
+        <script>
+          var slider = document.getElementById("range");
+          var output = document.getElementById("demo");
+          output.innerHTML = slider.value;
+          slider.oninput = function () {
+            output.innerHTML = this.value;
+          };
+        </script>
+      </div>
+      <div class="inputbox submit">
+        <input type="submit" value="submit" name="submit" />
+      </div>
+    </form>
+  </div>
+  <div class="chart">
+    <canvas id="myChart" style="width: 150px; height: 118px"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      const ctx = document.getElementById("myChart");
+
+      new Chart(ctx, {
+        type: "bar",
+
+        data: {
+          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+          datasets: [
+            {
+              label: "# of Votes",
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 205, 86)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    </script>
+    <div class="inputbox submit">
+      <input type="submit" value="clear" name="clear" />
+    </div>
+  </div>
+</div>
+
+{% endblock%}
