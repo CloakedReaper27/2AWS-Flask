@@ -13,8 +13,8 @@
       </div>
       <div class="memoryCapacity">
         <h3>Memory Capacity</h3>
-        <label for="range"><span id="demo"></span>/4 MB -/+ </label><br />
-        <input type="range" name="range" id="range" min="1" max="4" value="" />
+        <label for="range"><span id="demo"></span>/8 MB -/+ </label><br />
+        <input type="range" name="range" id="range" min="1" max="8" value="" />
         <script>
           var slider = document.getElementById("range");
           var output = document.getElementById("demo");
@@ -41,7 +41,7 @@
         type: "bar",
 
         data: {
-          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+          labels: ["Miss rate", "Hit Rate", "No. of items", "Total Size", "No. of requests per min", "Orange"],
           datasets: [
             {
               label: "# of Votes",

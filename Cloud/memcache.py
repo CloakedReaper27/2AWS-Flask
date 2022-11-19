@@ -11,17 +11,17 @@ max_Default = {0 : 1024000} # 1 MB Default
 Algo_Default = {0:0}
 
 def mem_cache(key,value):
-    img_size = 0
+    img_size = value
 
-    with open('static/images/'+value, "rb") as img_file:
+    # with open(value, "rb") as img_file:
                 
-        img_size = base64.b64encode(img_file.read()).decode("utf-8")
+    #     img_size = base64.b64encode(img_file.read()).decode("utf-8")
 
     if (max_Default[0]-Total_Size() > sys.getsizeof(img_size)):
 
-        with open('static/images/'+value, "rb") as img_file:
+        # with open(value, "rb") as img_file:
                 
-            memory_cache[key] = base64.b64encode(img_file.read()).decode("utf-8")
+        memory_cache[key] = value
                 
         print("current size of cache is : ",Total_Size())
         
@@ -53,9 +53,9 @@ def mem_cache(key,value):
                 i += 1
                 
 
-        with open('static/images/'+value, "rb") as img_file:
+        # with open(value, "rb") as img_file:
                 
-            memory_cache[key] = base64.b64encode(img_file.read()).decode("utf-8")
+        memory_cache[key] = value
                 
         print("current size of cache is : ",Total_Size())            
 

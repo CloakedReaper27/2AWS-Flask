@@ -7,6 +7,7 @@ from flask import Flask,render_template, request ,redirect,Response,flash, url_f
 import os
 from flask_mysqldb import MySQL
 from memcache import *
+from S3 import *
 from time import *
 from apscheduler.schedulers.background import BackgroundScheduler
 import datetime
@@ -103,6 +104,9 @@ def before_first_request():
 @app.route("/")
 def home():
 
+
+# Cache Memory Page
+
     return render_template('upload.html')
 @app.route("/editmem",methods=["GET", "POST"])
 def edit():
@@ -143,6 +147,10 @@ def edit():
             
         return render_template('editmem.html')
 
+#=============================
+
+# Statictics Page
+
 @app.route("/memcache")
 def memcache():
 
@@ -159,6 +167,10 @@ app.config['IMAGE_UPLOADS'] = "static/images"
 
 path =  0
 
+#=============================
+
+# List of Keys Page
+
 @app.route("/keys",methods=["GET"])
 def viewall():
         if request.method == 'GET':
@@ -169,6 +181,9 @@ def viewall():
             
         return render_template("keys.html",status=200,keys = keys)
         
+#=============================
+
+# Get image Page
 
 @app.route("/item",methods=["GET","POST"])
 def search():
@@ -200,28 +215,38 @@ def search():
                 cur = mysql.connection.cursor()
                 cur.execute('''SELECT `image_path` FROM `images` WHERE `image_key` = %s''', (key,))
                 path = cur.fetchone()
+                
                 try:
                     path = ''.join(path)
                 except TypeError:
                     invaild = 'Invaild key'
                     return render_template("item.html",Invaild=invaild)
+
+                path = download_file_from_bucket(path)
+                
                 end_time = time()
                 print((end_time - start_time)*1000,'ms')
                 LRUs[key] = 1
                 miss[0] = miss[0] + 1
                 requests[0] = requests[0] + 1
                 mem_cache(key,path)
-                zed = 1
+                zed = 0
             
     if zed == 1:
             return render_template("item.html",path=path, CurrentKey=key)
     elif zed == 0:
             return render_template("item.html",img_data=path, CurrentKey=key)
-	
+
+#=============================
+
+# App Manager Page
+
 @app.route("/Appmanager", methods=["GET"])
 def AppManager():
     if request.method == 'GET':
-        return render_template('Appmanager.html')    
+        return render_template('Appmanager.html')
+
+#=============================
 
 @app.route('/display/<filename>')
 def display_image(filename):
@@ -234,6 +259,10 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+#=============================
+
+# Upload image Page
+
 @app.route("/upload-image",methods=["GET","POST"])
 
 def upload_image():
@@ -241,11 +270,16 @@ def upload_image():
         return render_template("upload.html")
     
     if request.method == "POST":
+        check = 0
         if request.files:
             image = request.files["image"]
             if image and allowed_file(image.filename):
-                image.save(os.path.join(app.config['IMAGE_UPLOADS'],image.filename ))
-            #print(os.path.join(app.config['IMAGE_UPLOADS'],image.filename))
+
+                upload_to_aws(image, image.filename)
+
+
+                # image.save(os.path.join(app.config['IMAGE_UPLOADS'],image.filename ))
+                #print(os.path.join(app.config['IMAGE_UPLOADS'],image.filename))
                 
                 name = request.form['name']
 
@@ -266,7 +300,8 @@ def upload_image():
                     check = 1
 
                 if (check != 1):
-
+                    
+                    delete_file_from_bucket(path)
                     cursor = mysql.connection.cursor()
                     cursor.execute(''' UPDATE images SET image_path = %s WHERE image_key = %s''',(image.filename,name))
                     mysql.connection.commit()
@@ -274,7 +309,11 @@ def upload_image():
                     flash("Image updated successfully.")
                     check = 0
                     if name in memory_cache:
-                        mem_cache(name,image.filename)
+                        with open(image, "rb") as img_file:
+                            image = base64.b64encode(img_file).decode("utf-8")
+                        mem_cache(name,image)
+
+                    
                     return redirect(request.url)
 
             else:
