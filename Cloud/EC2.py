@@ -23,9 +23,7 @@ for pythonins in Myec2['Reservations']:
     
     for printout in pythonins['Instances']:
 
-        if (str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending'):
-            if(str(printout['Instanceid']) != 'i-06340a90561e1390f'):
-
+        if ((str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending') and str(printout['InstanceId']) != 'i-06340a90561e1390f'):
                 print(printout['InstanceId'])
                 i = 1
                 Max[0] = Max[0] + 1
@@ -66,13 +64,13 @@ def create_EC2_Instance():
             
             for printout in pythonins['Instances']:
 
-                if (str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending'):
-                    if(str(printout['Instanceid']) != 'i-06340a90561e1390f'):
-                        print(printout['InstanceId'])
-                        i = Max[0]
-                        instance_Storage[i] = printout['InstanceId']
-                        i = i - 1
-            
+                if ((str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending') and str(printout['InstanceId']) != 'i-06340a90561e1390f'):
+
+                    print(printout['InstanceId'])
+                    i = Max[0]
+                    instance_Storage[i] = printout['InstanceId']
+                    i = i - 1
+        
 
     else:
         print("Max numbers on instance has reached!")
