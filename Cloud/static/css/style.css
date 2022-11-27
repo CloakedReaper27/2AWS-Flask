@@ -1,20 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
 
-ul{
+ul {
   list-style: none;
-  background-color: #EEE;
+  background-color: #eee;
   margin-bottom: 50px;
   padding: 15px;
 }
-li{
+li {
   padding: 25px;
   margin-left: 20px;
   display: inline;
 }
-a{
-  text-decoration: none;    
+a {
+  text-decoration: none;
 }
-
 
 body {
   margin: 0;
@@ -23,26 +22,26 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(45deg, greenyellow, dodgerblue);
   font-family: "Sansita Swashed", cursive;
-
 }
-img{
-    width: 200px;
-    height: 200px;
+img {
+  width: 200px;
+  height: 200px;
 }
 
-.table{
+.table {
   height: 350px;
   overflow: auto;
 }
 
-.img2{
+.img2 {
   width: 200px;
   height: 200px;
-  top: -203px;
+  top: 0px;
   position: relative;
+  left: -203px;
 }
 .center {
   position: relative;
@@ -50,10 +49,10 @@ img{
   background: #fff;
   border-radius: 10px;
   height: 500px;
-  max-width: 350px;
+  max-width: 450px;
 }
 
-.center h1  {
+h1 {
   font-size: 2em;
   border-left: 5px solid dodgerblue;
   padding: 10px;
@@ -63,22 +62,22 @@ img{
   font-weight: bold;
   padding-left: 10px;
 }
-.center nav{
+.center nav {
   display: flex;
   border: 5px solid dodgerblue;
   margin-left: 211px;
   padding: 20px;
   margin-right: -40px;
 }
-.center nav #Least{
+.center nav #Least {
   margin-top: 45px;
 }
-.center #mem-cap{
+.center #mem-cap {
   border: 5px solid dodgerblue;
   padding: 20px;
   margin-bottom: 25px;
 }
-.mem-box p{
+.mem-box p {
   margin: 40px;
   width: 250px;
   height: 30px;
@@ -86,31 +85,26 @@ img{
   padding-top: 5px;
   border: 2px solid rgb(82, 144, 206);
 }
-.mem-box{
+.mem-box {
   width: 350px;
   border: 5px solid dodgerblue;
   height: 400px;
   padding-top: 0px;
 }
-.center .mem{
-
+.center .mem {
   font-size: 20px;
   letter-spacing: 2px;
 
   font-weight: bold;
   padding-left: 1px;
 }
-.center .inputbox {
+.inputbox {
   position: relative;
   width: 300px;
   height: 50px;
   margin-bottom: 25px;
 }
-.center .inputbox input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+ .inputbox input {
   border: 2px solid #000;
   outline: none;
   background: none;
@@ -118,10 +112,10 @@ img{
   border-radius: 10px;
   font-size: 1.2em;
 }
-.center .inputbox:last-child {
+ .inputbox:last-child {
   margin-bottom: 20;
 }
-.center .inputbox span {
+ .inputbox span {
   position: absolute;
   top: 14px;
   left: 20px;
@@ -129,28 +123,30 @@ img{
   transition: 0.6s;
   font-family: sans-serif;
 }
-.center .inputbox input:focus ~ span,
-.center .inputbox input:valid ~ span {
+
+.inputbox input:focus ~ span,
+.inputbox input:valid ~ span {
   transform: translateX(-13px) translateY(-35px);
   font-size: 1em;
 }
-.center .inputbox [type="submit"] ,.center .inputbox [type="reset"],.filelable{
-  width: 50%;
+ .inputbox [type="submit"],
+ .inputbox [type="reset"],
+.filelable ,.btn{
+  width: 170px;
   background: dodgerblue;
   color: #fff;
   border: #fff;
 }
-.center .inputbox:hover [type="submit"] ,.center .inputbox:hover [type="reset"]{
+ .inputbox:hover [type="submit"],
+ .inputbox:hover [type="reset"] ,
+ .btn:hover{
   background: linear-gradient(45deg, greenyellow, dodgerblue);
+  cursor: pointer;
 }
 
-input[type="file"]{
-  /* display: none; */
-}
-.filelable{
-
+.filelable {
   color: white;
- display: none;
+  display: none;
   position: absolute;
   background-color: #1e90ff;
   margin: 93px 93px 93px 141px;
@@ -161,48 +157,85 @@ input[type="file"]{
   font-size: 25px;
   border-radius: 10px;
   padding: 16px;
-
 }
 .filelable:hover {
   background: linear-gradient(45deg, greenyellow, dodgerblue);
 }
 
 .container {
-  flex-direction: row;
   position: relative;
   padding: 20px;
   background: #fff;
   border-radius: 10px;
-  height: 500px;
   width: 697px;
 }
-.setting {
-  width: 50%;
-  float: left;
-}
-.chart {
-  width: 50%;
-  float: right;
-}
-.policy,
-.memoryCapacity {
+ .policy,
+.memoryCapacity,.mode,.progression{
   width: 190px;
   padding: 0px 20px 10px 20px;
-  margin: auto;
   border: #1e90ff 2px solid;
   border-radius: 15px;
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
-  /* margin-top: 35px; */
 }
-.memoryCapacity{
-  margin-top: 35px;
+.setting-pol .policy{
+  float: left;
 }
+.mode{
+  margin:  40px auto;
+}
+.setting-pol{
+  display: flex;
+  margin: 40px 20px;
+  justify-content: space-around;
+}
+
 .container h1 {
  margin-left: 30%;
 }
-.submit{
-  margin: 40px 88px;
+.submit {
+  width: 156px;
+}
+.butn-cont{
+  display: flex;
+  justify-content: space-around;
+}
+.progression{
+  width: 512px;
+  height: 183px;
+  text-align: center;
+}
+.progress-container{
+  width: 500px;
+  height: 29px;
+  margin-bottom: 20px;
+  background-color: #EEE
+}
+.progress-bar{
+  width: 0px;
+  height: 29px;
+  background-color: #1e90ff;
+}
+.btn{
+  padding: 12px 0;
+  font-size: 16px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  margin: 15px 20px;
+}
+.threshold{
+  display: flex;
+  justify-content: space-evenly;
+  border: 2px #1e90ff solid;
+  width: 588px;
+  border-radius: 15px;
+  margin: auto;
+  align-self: center;
+  height: 130px;
+  display: none;
+}
+.minmiss #range , .maxmiss #range{
+  width: 250px;
 }

@@ -11,6 +11,7 @@ from S3 import *
 from time import *
 from apscheduler.schedulers.background import BackgroundScheduler
 import datetime
+from EC2 import *
 # import re
 
 hit = {0 :0}
@@ -59,27 +60,10 @@ def delay_Mins():
 
         mysql.connection.commit()
         cursor.close()
-        # cursor.execute(''' Select AVG(TotalSize_of_items) AS average from db_cache_statistic ''')
-        # rows = cursor.fetchall()
-        # for i in rows:
-        #     Changes[1] = i[0]
 
-        
-        # cursor.execute(''' Select AVG(No_of_requests ) AS average from db_cache_statistic ''')
-        # rows = cursor.fetchall()
-        # for i in rows:
-        #     Changes[2] = i[0]
+#==================================
+#Displays Current active instances and thier IDs
 
-        
-        # cursor.execute(''' Select AVG(Miss_rate) AS average from db_cache_statistic ''')
-        # rows = cursor.fetchall()
-        # for i in rows:
-        #     Changes[3] = i[0]
-
-        # cursor.execute(''' Select AVG(Hit_rate) AS average from db_cache_statistic ''')
-        # rows = cursor.fetchall()
-        # for i in rows:
-        #     Changes[4] = i[0]
             
 @app.before_first_request
 def before_first_request():
@@ -104,48 +88,70 @@ def before_first_request():
 @app.route("/")
 def home():
 
-
-# Cache Memory Page
-
     return render_template('upload.html')
-@app.route("/editmem",methods=["GET", "POST"])
+
+#=======================================
+# App manager Page
+
+@app.route("/Appmanager",methods=["GET", "POST"])
 def edit():
         if request.method == 'GET':
                 
-            return render_template('editmem.html')   
+            return render_template('Appmanager.html')   
             
         elif request.method == 'POST':
 
             try:
-                if request.form['clear'] == 'clear':
-                    x = 0
-            except:
-                if request.form['submit'] == 'submit':
+                if request.form['grow'] == 'grow':
 
-                    range = request.form['range']
-                        
-                    if request.form['mem'] == 'Random':
-                        x = 0
+                        create_EC2_Instance()
+
+                        no = Max[0]
+                        return render_template('Appmanager.html',CurrentNum = no)
+
+            except:
+
+                if request.form['shrink'] == 'shrink':
+
+                    terminate_EC2_Instance()
+
+                    no = Max[0]
+                    return render_template('Appmanager.html',CurrentNum = no)
+
+                # except:
+                #     try:
+                #         if request.form['clear'] == 'clear':
+                #             x = 0
+                #     except:
+                #         if request.form['submit'] == 'submit':
                             
-                    elif request.form['mem'] == 'Least':
-                        x = 1
-                           
-                    max_Default[0] = int(range)*1000000
-                    Algo_Default[0] = x
+                #             range = request.form['range']   
+                            
+                #             if request.form['mem'] == 'Random':
+                #                 x = 0
+                                    
+                #             elif request.form['mem'] == 'Least':
+                #                 x = 1
+                                
+                #             max_Default[0] = int(range)*1000000
+                #             Algo_Default[0] = x
+                            
+                #             cursor = mysql.connection.cursor()
+                #             cursor.execute(''' UPDATE db_cache SET Algorithm_Chosen = (%s), Mem_size= (%s)  ''',(x,int(range)))
+                #             mysql.connection.commit()
+                #             cursor.close()
+                            
+                #             print(max_Default)
                     
-                    cursor = mysql.connection.cursor()
-                    cursor.execute(''' UPDATE db_cache SET Algorithm_Chosen = (%s), Mem_size= (%s)  ''',(x,int(range)))
-                    mysql.connection.commit()
-                    cursor.close()
                     
-                    print(max_Default)
-                return render_template('editmem.html')
+
+                return render_template('Appmanager.html')
                     
             memory_cache.clear()
             print("Cache cleared!")
             
             
-        return render_template('editmem.html')
+        return render_template('Appmanager.html')
 
 #=============================
 
@@ -241,10 +247,10 @@ def search():
 
 # App Manager Page
 
-@app.route("/Appmanager", methods=["GET"])
-def AppManager():
-    if request.method == 'GET':
-        return render_template('Appmanager.html')
+# @app.route("/Appmanager", methods=["GET"])
+# def AppManager():
+#     if request.method == 'GET':
+#         return render_template('Appmanager.html')
 
 #=============================
 
@@ -309,8 +315,8 @@ def upload_image():
                     flash("Image updated successfully.")
                     check = 0
                     if name in memory_cache:
-                        with open(image, "rb") as img_file:
-                            image = base64.b64encode(img_file).decode("utf-8")
+                        
+                        image = download_file_from_bucket(image.filename)
                         mem_cache(name,image)
 
                     

@@ -1,73 +1,118 @@
 {% extends 'base.html' %} {% block head %} {% endblock%} {% block body %}
 <div class="container">
   <h1>App Manager</h1>
+  <div class="chart">
+    <canvas id="myChart" style="width: 150px; height: 118px"></canvas>
+  </div>
   <div class="setting">
     <form method="post">
-      <div class="policy">
-        <h2>Policy</h2>
-        <input type="radio" name="mem" id="Random" value="Random" checked />
-        <label for="Random">Random Replacement</label>
-        <br />
-        <input type="radio" name="mem" id="Least" value="Least" />
-        <label for="Least">Least Recently Used</label>
+      <div class="mode">
+        <p>Select Mode:</p>
+        <div class="radio" style="padding-bottom: 10px">
+          <input
+            type="radio"
+            id="choice-one"
+            name="policy"
+            value="random"
+            data-cont=".one"
+            checked
+          />
+          <label class="iii" for="choice-one">Manual Mode</label>
+        </div>
+        <div class="radio">
+          <input
+            type="radio"
+            id="choice-two"
+            name="policy"
+            value="LRU"
+            data-cont=".two"
+          />
+          <label for="choice-two">Automatic Mode</label>
+        </div>
       </div>
-      <div class="memoryCapacity">
-        <h3>Memory Capacity</h3>
-        <label for="range"><span id="demo"></span>/8 MB -/+ </label><br />
-        <input type="range" name="range" id="range" min="1" max="8" value="" />
-        <script>
-          var slider = document.getElementById("range");
-          var output = document.getElementById("demo");
-          output.innerHTML = slider.value;
-          slider.oninput = function () {
-            output.innerHTML = this.value;
-          };
-        </script>
+      <div class="progression mode">
+        <p class="progress-text">Cache Pool</p>
+        <div class="progress-container"><p>The current number of Pool is {{ CurrentNum }}</p></div>
+        <div class="buttons">
+          <button
+            class="btn"
+            id = "btnDecrease"
+            type="submit"
+            name="shrink"
+            value="shrink"
+          >Shrinking -</button>
+          <button
+            class="btn"
+            id = "btnIncrease"
+            type="submit"
+            name="grow"
+            value="grow"
+          >Grow +</button>
+        </div>
       </div>
-      <div class="inputbox submit">
-        <input type="submit" value="submit" name="submit" />
+      <div class="threshold">
+        <div class="maxmiss">
+          <h3>Max Miss Rate threshold</h3>
+          <label for="range"><span id="demo"></span>% </label><br />
+          <input
+            type="range"
+            name="range"
+            id="range"
+            min="0"
+            max="100"
+            value=""
+          />
+        </div>
+        <div class="minmiss">
+          <h3>Min Miss Rate threshold</h3>
+          <label for="range"><span id="demo"></span>% </label><br />
+          <input
+            type="range"
+            name="range"
+            id="range"
+            min="0"
+            max="100"
+            value=""
+          />
+        </div>
+      </div>
+
+      <div class="setting-pol">
+        <div class="policy">
+          <h2>Policy</h2>
+          <input type="radio" name="mem" id="Random" value="Random" checked />
+          <label for="Random">Random Replacement</label>
+          <br />
+          <input type="radio" name="mem" id="Least" value="Least" />
+          <label for="Least">Least Recently Used</label>
+        </div>
+        <div class="memoryCapacity">
+          <h3>Memory Capacity</h3>
+          <label for="range"><span id="demo"></span>/4 MB -/+ </label><br />
+          <input
+            type="range"
+            name="range"
+            id="range"
+            min="1"
+            max="4"
+            value=""
+          />
+        </div>
+      </div>
+      <div class="butn-cont">
+        <div class="inputbox submit">
+          <input type="submit" value="submit" name="submit" />
+        </div>
+        <div class="inputbox submit">
+          <input type="submit" value="clear cache" name="clear" />
+        </div>
+        <div class="inputbox submit">
+          <input type="submit" value="clear images" name="clear" />
+        </div>
       </div>
     </form>
   </div>
-  <div class="chart">
-    <canvas id="myChart" style="width: 150px; height: 118px"></canvas>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-      const ctx = document.getElementById("myChart");
-
-      new Chart(ctx, {
-        type: "bar",
-
-        data: {
-          labels: ["Miss rate", "Hit Rate", "No. of items", "Total Size", "No. of requests per min", "Orange"],
-          datasets: [
-            {
-              label: "# of Votes",
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                "rgb(255, 99, 132)",
-                "rgb(54, 162, 235)",
-                "rgb(255, 205, 86)",
-              ],
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      });
-    </script>
-    <div class="inputbox submit">
-      <input type="submit" value="clear" name="clear" />
-    </div>
-  </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../static/main.js"></script>
 {% endblock%}
