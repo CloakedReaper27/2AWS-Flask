@@ -24,11 +24,13 @@ for pythonins in Myec2['Reservations']:
     for printout in pythonins['Instances']:
 
         if (str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending'):
-            print(printout['InstanceId'])
-            i = 1
-            Max[0] = Max[0] + 1
-            instance_Storage[i] = printout['InstanceId']
-            i = i + 1
+            if(str(printout['Instanceid']) != 'i-06340a90561e1390f'):
+
+                print(printout['InstanceId'])
+                i = 1
+                Max[0] = Max[0] + 1
+                instance_Storage[i] = printout['InstanceId']
+                i = i + 1
 
 
 # info = {}
@@ -65,10 +67,11 @@ def create_EC2_Instance():
             for printout in pythonins['Instances']:
 
                 if (str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending'):
-                    print(printout['InstanceId'])
-                    i = Max[0]
-                    instance_Storage[i] = printout['InstanceId']
-                    i = i - 1
+                    if(str(printout['Instanceid']) != 'i-06340a90561e1390f'):
+                        print(printout['InstanceId'])
+                        i = Max[0]
+                        instance_Storage[i] = printout['InstanceId']
+                        i = i - 1
             
 
     else:
