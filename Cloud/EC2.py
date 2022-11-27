@@ -19,6 +19,7 @@ client = boto3.client('ec2',
             region_name=os.getenv('REGION_NAME'))
         
 Myec2=client.describe_instances()
+
 for pythonins in Myec2['Reservations']:
     
     for printout in pythonins['Instances']:
