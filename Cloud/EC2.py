@@ -9,7 +9,7 @@ import time
 from dotenv import load_dotenv
 load_dotenv(verbose=True)
 
-Max = {0:0}
+Max = {0:1}
 instance_Storage = {}
 
 
@@ -68,7 +68,7 @@ def create_EC2_Instance():
                 if ((str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending') and str(printout['InstanceId']) != 'i-06340a90561e1390f'):
 
                     print(printout['InstanceId'])
-                    i = Max[0]
+                    i = Max[0]-1
                     instance_Storage[i] = printout['InstanceId']
                     i = i - 1
         
@@ -83,11 +83,11 @@ def terminate_EC2_Instance():
         aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
         region_name=os.getenv('REGION_NAME'))
     
-    if (Max[0] > 0):
+    if (Max[0] > 1):
         
 
-        ec2.terminate_instances(InstanceIds= [instance_Storage[Max[0]]])
-
+        ec2.terminate_instances(InstanceIds= [instance_Storage[Max[0]-1]])
+        time.sleep(1)
         Max[0] = Max[0] - 1
         print("Instance terminated")
     else:

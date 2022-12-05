@@ -97,7 +97,7 @@ def home():
 def edit():
         if request.method == 'GET':
                 
-            return render_template('Appmanager.html')   
+            return render_template('Appmanager.html',CurrentNum = Max[0])   
             
         elif request.method == 'POST':
 
@@ -110,14 +110,13 @@ def edit():
                         return render_template('Appmanager.html',CurrentNum = no)
 
             except:
-
                 if request.form['shrink'] == 'shrink':
 
                     terminate_EC2_Instance()
 
                     no = Max[0]
                     return render_template('Appmanager.html',CurrentNum = no)
-
+                
                 # except:
                 #     try:
                 #         if request.form['clear'] == 'clear':
@@ -145,13 +144,13 @@ def edit():
                     
                     
 
-                return render_template('Appmanager.html')
+                return render_template('Appmanager.html',CurrentNum = Max[0])
                     
             memory_cache.clear()
             print("Cache cleared!")
             
             
-        return render_template('Appmanager.html')
+        return render_template('Appmanager.html',CurrentNum = Max[0])
 
 #=============================
 

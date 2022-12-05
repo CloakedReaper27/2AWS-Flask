@@ -4,7 +4,7 @@ const ctx = document.getElementById("myChart");
       new Chart(ctx, {
         type: "line",
         data: {
-          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+          labels: ["miss rate", "hit rate", "no. of items", "total size", "no of requests per min"],
           datasets: [
             {
               label: "# of Votes",
