@@ -24,7 +24,7 @@ for pythonins in Myec2['Reservations']:
     
     for printout in pythonins['Instances']:
 
-        if ((str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending') and str(printout['InstanceId']) != 'i-06340a90561e1390f'):
+        if ((str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending') and str(printout['InstanceId']) != 'i-0a27b97833ab1eb4a'):
                 print(printout['InstanceId'])
                 i = 1
                 Max[0] = Max[0] + 1
