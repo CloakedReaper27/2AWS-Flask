@@ -1,5 +1,4 @@
 import boto3
-import base64
 from botocore.exceptions import NoCredentialsError
 from botocore.exceptions import ClientError
 from botocore.config import Config
@@ -24,7 +23,7 @@ for pythonins in Myec2['Reservations']:
     
     for printout in pythonins['Instances']:
 
-        if ((str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending') and str(printout['InstanceId']) != 'i-0a27b97833ab1eb4a'):
+        if ((str(printout['State']['Name']) == 'running' or str(printout['State']['Name']) == 'pending') and str(printout['InstanceId']) != 'i-06340a90561e1390f'):
                 print(printout['InstanceId'])
                 i = 1
                 Max[0] = Max[0] + 1
@@ -48,8 +47,8 @@ def create_EC2_Instance():
         'KeyName': os.getenv('EC2_KEYPAIR'), 
         'SecurityGroupIds': [os.getenv('SECURITYGROUPIDS1'),os.getenv('SECURITYGROUPIDS2'),os.getenv('SECURITYGROUPIDS3')]}
 
-        ec2.create_instances (**instance_params, MinCount=1, MaxCount=1)[0]
-        # instance.wait_until_running()
+        instance = ec2.create_instances (**instance_params, MinCount=1, MaxCount=1)[0]
+        instance.wait_until_running()
 
         print("New Instance Created")
         Max[0] = Max[0] + 1

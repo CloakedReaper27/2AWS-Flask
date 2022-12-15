@@ -53,10 +53,10 @@
       <div class="threshold">
         <div class="maxmiss">
           <h3>Max Miss Rate threshold</h3>
-          <label for="range"><span id="demo"></span>% </label><br />
+          <label for="range1"><span id="demo"></span>% </label><br />
           <input
             type="range"
-            name="range"
+            name="range1"
             id="range"
             min="0"
             max="100"
@@ -65,10 +65,10 @@
         </div>
         <div class="minmiss">
           <h3>Min Miss Rate threshold</h3>
-          <label for="range"><span id="demo"></span>% </label><br />
+          <label for="range2"><span id="demo"></span>% </label><br />
           <input
             type="range"
-            name="range"
+            name="range2"
             id="range"
             min="0"
             max="100"
@@ -97,6 +97,14 @@
             max="4"
             value=""
           />
+          <script>
+            var slider = document.getElementById("range");
+            var output = document.getElementById("demo");
+            output.innerHTML = slider.value;
+            slider.oninput = function () {
+              output.innerHTML = this.value;
+            };
+          </script>
         </div>
       </div>
       <div class="butn-cont">
@@ -107,7 +115,7 @@
           <input type="submit" value="clear cache" name="clear" />
         </div>
         <div class="inputbox submit">
-          <input type="submit" value="clear images" name="clear" />
+          <input type="submit" value="clear images" name="clear2" />
         </div>
       </div>
     </form>

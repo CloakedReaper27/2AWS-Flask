@@ -4,10 +4,10 @@ const ctx = document.getElementById("myChart");
       new Chart(ctx, {
         type: "line",
         data: {
-          labels: ["miss rate", "hit rate", "no. of items", "total size", "no of requests per min"],
+          labels: ["30:00", "1:00:00", "1:30:00", "2:00:00", "2:30:00"],
           datasets: [
             {
-              label: "# of Votes",
+              label: "miss rate",
               data: [12, 19, 3, 5, 2, 3],
               backgroundColor: [
                 "rgb(255, 99, 132)",
@@ -18,7 +18,7 @@ const ctx = document.getElementById("myChart");
               yAxisID: 'y',
             },
             {
-              label: "# of Votes",
+              label: "hit rate",
               data: [2, 9, 3, 5, 5,13],
               backgroundColor: [
                 "rgb(255, 99, 132)",
@@ -30,7 +30,7 @@ const ctx = document.getElementById("myChart");
               yAxisID: 'y1',
             },
             {
-              label: "# of Votes",
+              label: "no. of items",
               data: [ 5, 5,13,2, 9, 3,],
               backgroundColor: [
                 "rgb(255, 99, 132)",
@@ -42,7 +42,7 @@ const ctx = document.getElementById("myChart");
               yAxisID: 'y2',
             },
             {
-              label: "# of Votes",
+              label: "total size",
               data: [2, 13,9, 3, 5, 5],
               backgroundColor: [
                 "rgb(255, 99, 132)",
@@ -50,7 +50,31 @@ const ctx = document.getElementById("myChart");
                 "rgb(255, 205, 86)",
               ],
               borderWidth: 5,
-              borderColor:'rgb(255, 99, 132)',
+              borderColor:'rgb(255, 9, 132)',
+              yAxisID: 'y3',
+            },
+			{
+              label: "no of requests per min",
+              data: [7, 11,2, 5, 12, 1],
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 205, 86)",
+              ],
+              borderWidth: 5,
+              borderColor:'rgb(25, 9, 132)',
+              yAxisID: 'y3',
+            },
+			{
+              label: "no of workers",
+              data: [1, 3,5, 3, 7, 2],
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 205, 86)",
+              ],
+              borderWidth: 5,
+              borderColor:'rgb(255, 99, 12)',
               yAxisID: 'y3',
             },
           ],

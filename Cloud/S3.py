@@ -40,6 +40,18 @@ def delete_file_from_bucket(s3_key):
         Key= s3_key,
     )   
 
+def delete_all_from_bucket ():
+
+    s3  = boto3.resource('s3',
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
+    region_name=os.getenv('REGION_NAME'))
+
+    bucket = s3.Bucket(bucket_name)
+
+    bucket.objects.all().delete()
+    print ("S3 Bucket Dumped!")
+
 # s3.download_file(Key=s3_key, Bucket="cloud1-project-bucket", Filename=dst_path)
 
 # download_file_from_bucket('tci-s3-demo', 'children_download.csv')

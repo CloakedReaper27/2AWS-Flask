@@ -12,6 +12,7 @@ from time import *
 from apscheduler.schedulers.background import BackgroundScheduler
 import datetime
 from EC2 import *
+
 # import re
 
 hit = {0 :0}
@@ -103,53 +104,61 @@ def edit():
 
             try:
                 if request.form['grow'] == 'grow':
-
+ 
                         create_EC2_Instance()
 
                         no = Max[0]
                         return render_template('Appmanager.html',CurrentNum = no)
 
             except:
-                if request.form['shrink'] == 'shrink':
+                try:
+                    if request.form['shrink'] == 'shrink':
 
-                    terminate_EC2_Instance()
+                        terminate_EC2_Instance()
 
-                    no = Max[0]
-                    return render_template('Appmanager.html',CurrentNum = no)
+                        no = Max[0]
+                        return render_template('Appmanager.html',CurrentNum = no)
                 
-                # except:
-                #     try:
-                #         if request.form['clear'] == 'clear':
-                #             x = 0
-                #     except:
-                #         if request.form['submit'] == 'submit':
+                except:
+                    try:
+                        if request.form['clear'] == 'clear cache':
+                            memory_cache.clear()
+                            print("Cache cleared!")
                             
-                #             range = request.form['range']   
-                            
-                #             if request.form['mem'] == 'Random':
-                #                 x = 0
-                                    
-                #             elif request.form['mem'] == 'Least':
-                #                 x = 1
-                                
-                #             max_Default[0] = int(range)*1000000
-                #             Algo_Default[0] = x
-                            
-                #             cursor = mysql.connection.cursor()
-                #             cursor.execute(''' UPDATE db_cache SET Algorithm_Chosen = (%s), Mem_size= (%s)  ''',(x,int(range)))
-                #             mysql.connection.commit()
-                #             cursor.close()
-                            
-                #             print(max_Default)
-                    
-                    
+                    except:
+                        try:
+                            if request.form['clear2'] == 'clear images':
 
-                return render_template('Appmanager.html',CurrentNum = Max[0])
-                    
-            memory_cache.clear()
-            print("Cache cleared!")
-            
-            
+                                cursor = mysql.connection.cursor()
+                                cursor.execute(''' DELETE FROM images ''')
+                                mysql.connection.commit
+                                print(cursor.rowcount, "record(s) deleted")
+                                cursor.close()
+
+                                print("Images cleared!")
+
+                                delete_all_from_bucket ()
+                        except:    
+                            if request.form['submit'] == 'submit':
+                                
+                                range = request.form['range']   
+                                
+                                if request.form['mem'] == 'Random':
+                                    x = 0
+                                        
+                                elif request.form['mem'] == 'Least':
+                                    x = 1
+                                    
+                                max_Default[0] = int(range)*1000000
+                                Algo_Default[0] = x
+                                
+                                cursor = mysql.connection.cursor()
+                                cursor.execute(''' UPDATE db_cache SET Algorithm_Chosen = (%s), Mem_size= (%s)  ''',(x,int(range)))
+                                mysql.connection.commit()
+                                cursor.close()
+                                
+                                print(max_Default)
+  
         return render_template('Appmanager.html',CurrentNum = Max[0])
 
 #=============================
@@ -200,15 +209,15 @@ def search():
             key = request.form['key']
             
             if key in memory_cache:
-                start_time = time()
+                # start_time = time()
                 
                 path = memory_cache[key]
 
                 LRUs[key] = LRUs[key] + 1.0
 
-                end_time = time()
+                # end_time = time()
                 
-                print((end_time - start_time)*1000000,'ms')
+                # print((end_time - start_time)*1000000,'ms')
                 
                 hit[0] = hit[0] + 1
                 requests[0] = requests[0] + 1
@@ -216,7 +225,7 @@ def search():
                 zed = 0
 
             else:
-                start_time = time()
+                # start_time = time()
                 cur = mysql.connection.cursor()
                 cur.execute('''SELECT `image_path` FROM `images` WHERE `image_key` = %s''', (key,))
                 path = cur.fetchone()
@@ -229,8 +238,8 @@ def search():
 
                 path = download_file_from_bucket(path)
                 
-                end_time = time()
-                print((end_time - start_time)*1000,'ms')
+                # end_time = time()
+                # print((end_time - start_time)*1000,'ms')
                 LRUs[key] = 1
                 miss[0] = miss[0] + 1
                 requests[0] = requests[0] + 1

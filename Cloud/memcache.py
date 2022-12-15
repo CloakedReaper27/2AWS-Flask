@@ -7,7 +7,7 @@ from collections import OrderedDict
 memory_cache = {}
 LRUs = OrderedDict()
 
-max_Default = {0 : 409600} # 4 MB Default
+max_Default = {0 : 4096000} # 4 MB Default
 Algo_Default = {0:0}
 
 def mem_cache(key,value):
