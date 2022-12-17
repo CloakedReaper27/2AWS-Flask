@@ -1,14 +1,34 @@
 // start chart js
+
+var geo0 = JSON.parse(document.getElementById("mydiv").dataset.geo0);
+var geo1 = JSON.parse(document.getElementById("mydiv1").dataset.geo1);
+var geo2 = JSON.parse(document.getElementById("mydiv2").dataset.geo2);
+var geo3 = JSON.parse(document.getElementById("mydiv3").dataset.geo3);
+var geo4 = JSON.parse(document.getElementById("mydiv4").dataset.geo4);
+// var workers = JSON.parse(document.getElementById("workers").dataset.work);
+
+
 const ctx = document.getElementById("myChart");
-        
       new Chart(ctx, {
         type: "line",
         data: {
           labels: ["30:00", "1:00:00", "1:30:00", "2:00:00", "2:30:00"],
           datasets: [
             {
+              label: "no of workers",
+              data: [geo0[5],geo1[5],geo2[5],geo3[5],geo4[5]],
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 205, 86)",
+              ],
+              borderWidth: 5,
+              borderColor:'rgb(255, 99, 12)',
+              yAxisID: 'y',
+            },
+            {
               label: "miss rate",
-              data: [12, 19, 3, 5, 2, 3],
+              data: [geo0[3],geo1[3],geo2[3],geo3[3],geo4[3]],
               backgroundColor: [
                 "rgb(255, 99, 132)",
                 "rgb(54, 162, 235)",
@@ -19,7 +39,7 @@ const ctx = document.getElementById("myChart");
             },
             {
               label: "hit rate",
-              data: [2, 9, 3, 5, 5,13],
+              data: [geo0[4],geo1[4],geo2[4],geo3[4],geo4[4]],
               backgroundColor: [
                 "rgb(255, 99, 132)",
                 "rgb(54, 162, 235)",
@@ -27,11 +47,11 @@ const ctx = document.getElementById("myChart");
               ],
               borderWidth: 5,
               borderColor:'rgb(54, 162, 235)',
-              yAxisID: 'y1',
+              yAxisID: 'y',
             },
             {
               label: "no. of items",
-              data: [ 5, 5,13,2, 9, 3,],
+              data: [geo0[0],geo1[0],geo2[0],geo3[0],geo4[0]],
               backgroundColor: [
                 "rgb(255, 99, 132)",
                 "rgb(54, 162, 235)",
@@ -39,11 +59,11 @@ const ctx = document.getElementById("myChart");
               ],
               borderWidth: 5,
               borderColor:'rgb(255, 205, 86)',
-              yAxisID: 'y2',
+              yAxisID: 'y',
             },
             {
               label: "total size",
-              data: [2, 13,9, 3, 5, 5],
+              data: [geo0[2],geo1[2],geo2[2],geo3[2],geo4[2]],
               backgroundColor: [
                 "rgb(255, 99, 132)",
                 "rgb(54, 162, 235)",
@@ -51,11 +71,11 @@ const ctx = document.getElementById("myChart");
               ],
               borderWidth: 5,
               borderColor:'rgb(255, 9, 132)',
-              yAxisID: 'y3',
+              yAxisID: 'y',
             },
-			{
+			      {
               label: "no of requests per min",
-              data: [7, 11,2, 5, 12, 1],
+              data: [geo0[1],geo1[1],geo2[1],geo3[1],geo4[1]],
               backgroundColor: [
                 "rgb(255, 99, 132)",
                 "rgb(54, 162, 235)",
@@ -63,20 +83,9 @@ const ctx = document.getElementById("myChart");
               ],
               borderWidth: 5,
               borderColor:'rgb(25, 9, 132)',
-              yAxisID: 'y3',
+              yAxisID: 'y',
             },
-			{
-              label: "no of workers",
-              data: [1, 3,5, 3, 7, 2],
-              backgroundColor: [
-                "rgb(255, 99, 132)",
-                "rgb(54, 162, 235)",
-                "rgb(255, 205, 86)",
-              ],
-              borderWidth: 5,
-              borderColor:'rgb(255, 99, 12)',
-              yAxisID: 'y3',
-            },
+			      
           ],
         },
         options: {

@@ -14,12 +14,19 @@ import datetime
 from EC2 import *
 
 # import re
-
+name = ['','','','','','']
+name1 = ['','','','','','']
+name2 = ['','','','','','']
+name3 = ['','','','','','']
+name4 = ['','','','','','']
+workers = ['','','','','','']
 hit = {0 :0}
 miss = {0 :0}
 requests= {0 :0}
+arrow = [1]
+arrow[0] = 0
 #---------------------------------
-Changes = {0:0 ,1:0 ,2:0 ,3:0 ,4:0}
+# Changes = {0:'' ,1:'' ,2:'' ,3:'' ,4:''}
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
@@ -42,34 +49,75 @@ def interval_task():
         mysql.connection.commit()
         cursor.close()
 
-def delay_Mins():
-    
+def ThirtyMins():
     with app.app_context():
-        # Changes[0] = len(memory_cache)
-        # Changes[1] = sys.getsizeof(memory_cache)
-        # Changes[2] = requests[0]
+        
 
-        cursor = mysql.connection.cursor()
-        cursor.execute(''' Select AVG(No_of_items) ,AVG(TotalSize_of_items), AVG(No_of_requests), AVG(Miss_rate),AVG(Hit_rate) from db_cache_statistic ''')
-        rows = cursor.fetchall()
+        if (arrow[0] == 0):
+            name[0] = len(memory_cache)
+            name[1] = requests[0]
+            name[2] = Total_Size()/100000
+            name[3] = miss[0]
+            name[4] = hit[0]
+            name[5] = Max[0]
 
-        Changes[0] = rows[0][0]
-        Changes[1] = rows[0][1]
-        Changes[2] = rows[0][2]
-        Changes[3] = rows[0][3]
-        Changes[4] = rows[0][4]
+        elif (arrow[0] == 1):
+            name1[0] = len(memory_cache)
+            name1[1] = requests[0]
+            name1[2] = Total_Size()/100000
+            name1[3] = miss[0]
+            name1[4] = hit[0]
+            name1[5] = Max[0]
 
-        mysql.connection.commit()
-        cursor.close()
+        elif (arrow[0] == 2):
+            name2[0] = len(memory_cache)
+            name2[1] = requests[0]
+            name2[2] = Total_Size()/100000
+            name2[3] = miss[0]
+            name2[4] = hit[0]
+            name2[5] = Max[0]
 
+        elif (arrow[0] == 3):
+            name3[0] = len(memory_cache)
+            name3[1] = requests[0]
+            name3[2] = Total_Size()/100000
+            name3[3] = miss[0]
+            name3[4] = hit[0]
+            name3[5] = Max[0]
+
+        elif (arrow[0] == 4):
+            name4[0] = len(memory_cache)
+            name4[1] = requests[0]
+            name4[2] = Total_Size()/100000
+            name4[3] = miss[0]
+            name4[4] = hit[0]
+            name4[5] = Max[0]
+
+        elif (arrow[0] >= 5):
+            for e in name:
+                name[e]=name1[e]
+                name1[e]=name2[e]
+                name1[e]=name2[e]
+                name2[e]=name3[e]
+                name3[e]=name4[e]
+                
+            name4[0] = len(memory_cache)
+            name4[1] = requests[0]
+            name4[2] = Total_Size()/100000
+            name4[3] = miss[0]
+            name4[4] = hit[0]
+            name4[5] = Max[0]
+        
+        arrow[0] = arrow[0] + 1
+        print("ticked!")
 #==================================
 #Displays Current active instances and thier IDs
 
-            
+
 @app.before_first_request
 def before_first_request():
     scheduler.add_job(func=interval_task, trigger="interval", seconds=5)
-    scheduler.add_job(func=delay_Mins, trigger="interval", minutes=10)
+    scheduler.add_job(func=ThirtyMins, trigger="interval", seconds=10)
 
     cursor = mysql.connection.cursor()
     cursor.execute(''' Select Mem_size from db_cache''')
@@ -96,9 +144,10 @@ def home():
 
 @app.route("/Appmanager",methods=["GET", "POST"])
 def edit():
-        if request.method == 'GET':
-                
-            return render_template('Appmanager.html',CurrentNum = Max[0])   
+        if request.method == 'GET': 
+
+            return render_template('Appmanager.html',CurrentNum = Max[0], name = name
+            , name1 = name1, name2 = name2, name3 = name3, name4 = name4,numofworkers = Max[0])   
             
         elif request.method == 'POST':
 
@@ -165,19 +214,19 @@ def edit():
 
 # Statictics Page
 
-@app.route("/memcache")
-def memcache():
+# @app.route("/memcache")
+# def memcache():
 
-    no = Changes[0]
-    size = Changes[1]
-    request = Changes[2]
-    misses = Changes[3]
-    hits = Changes[4]
+#     no = Changes[0]
+#     size = Changes[1]
+#     request = Changes[2]
+#     misses = Changes[3]
+#     hits = Changes[4]
     
-    return render_template('memcache.html', no=no,hits=hits,misses=misses,size=size,request=request)
+#     return render_template('memcache.html', no=no,hits=hits,misses=misses,size=size,request=request)
 
 
-app.config['IMAGE_UPLOADS'] = "static/images"
+# app.config['IMAGE_UPLOADS'] = "static/images"
 
 path =  0
 

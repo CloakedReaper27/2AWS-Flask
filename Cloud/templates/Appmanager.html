@@ -121,6 +121,12 @@
     </form>
   </div>
 </div>
+<div id="mydiv" data-geo0='{{ name|tojson }}'></div>
+<div id="mydiv1" data-geo1='{{ name1|tojson }}'></div>
+<div id="mydiv2" data-geo2='{{ name2|tojson }}'></div>
+<div id="mydiv3" data-geo3='{{ name3|tojson }}'></div>
+<div id="mydiv4" data-geo4='{{ name4|tojson }}'></div>
+<div id="workers" data-work='{{ numofworkers|tojson }}'></div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../static/main.js"></script>
 {% endblock%}
