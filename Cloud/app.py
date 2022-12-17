@@ -117,7 +117,7 @@ def ThirtyMins():
 @app.before_first_request
 def before_first_request():
     scheduler.add_job(func=interval_task, trigger="interval", seconds=5)
-    scheduler.add_job(func=ThirtyMins, trigger="interval", seconds=10)
+    scheduler.add_job(func=ThirtyMins, trigger="interval", minutes=30)
 
     cursor = mysql.connection.cursor()
     cursor.execute(''' Select Mem_size from db_cache''')
